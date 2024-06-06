@@ -1,6 +1,6 @@
 ﻿using RuneRealm.Entities;
 
-namespace RuneRealm.Network.Packet;
+namespace RuneRealm.Network.Packets;
 
 public class PacketParameters
 {

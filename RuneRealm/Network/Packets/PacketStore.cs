@@ -1,6 +1,6 @@
 ﻿using RuneRealm.Constants;
 
-namespace RuneRealm.Network.Packet;
+namespace RuneRealm.Network.Packets;
 
 public class PacketStore
 {

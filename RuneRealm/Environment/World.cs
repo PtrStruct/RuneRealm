@@ -6,19 +6,24 @@ namespace RuneRealm.Environment;
 
 public class World
 {
-    public static List<Player> Players { get; set; } = new ();
+    public static List<Player> Players { get; set; } = new();
 
     public static void Process()
     {
         FetchData();
         ProcessPackets();
-        
+
+        foreach (var player in Players)
+            player.TaskScheduler.ProcessTasks();
+        foreach (var player in Players)
+            player.MovementHandler.Process();
+
         PlayerUpdateManager.Update();
-        
+
         FlushAllPlayers();
         ResetPlayers();
     }
-    
+
     private static void FetchData()
     {
         foreach (var player in Players)
@@ -30,7 +35,7 @@ public class World
     {
         foreach (var player in Players) player.Session.PacketStore.ProcessPackets();
     }
-    
+
     private static void FlushAllPlayers()
     {
         foreach (var player in Players.ToList())

@@ -3,7 +3,7 @@ using RuneRealm.Constants;
 using RuneRealm.Entities;
 using RuneRealm.Environment;
 using RuneRealm.Models;
-using RuneRealm.Network.Packet;
+using RuneRealm.Network.Packets;
 
 namespace RuneRealm.Network;
 
@@ -93,11 +93,9 @@ public class PlayerSession
         if (_packetLength > Socket.Available) return;
 
         Fill(_packetLength);
-        Console.WriteLine($"[{_opCode}] Packet Received - Length: {_packetLength}");
+        Console.WriteLine($"[{_opCode}] [{(ClientOpCodes)_opCode}] Packet Received - Length: {_packetLength}");
 
-        var packet = PacketFactory.CreateClientPacket(_opCode,
-            new PacketParameters { OpCode = _opCode, Length = _packetLength, Player = _owner });
-
+        var packet = PacketFactory.CreateClientPacket(_opCode, new PacketParameters { OpCode = _opCode, Length = _packetLength, Player = _owner });
         PacketStore.AddPacket((ClientOpCodes)_opCode, packet);
         _state = FetchState.READ_OPCODE;
     }

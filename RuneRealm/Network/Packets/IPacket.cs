@@ -1,4 +1,4 @@
-﻿namespace RuneRealm.Network.Packet;
+﻿namespace RuneRealm.Network.Packets;
 
 public interface IPacket
 {

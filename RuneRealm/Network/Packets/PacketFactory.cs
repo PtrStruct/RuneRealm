@@ -1,4 +1,6 @@
-﻿namespace RuneRealm.Network.Packet;
+﻿using RuneRealm.Network.Packets.Incoming;
+
+namespace RuneRealm.Network.Packets;
 
 public static class PacketFactory
 {
@@ -6,10 +8,10 @@ public static class PacketFactory
     {
         switch (opcode)
         {
-            //case 164:
-            //case 248:
-            //case 98:
-            //    return new WalkPacket(parameters);
+            case 164:
+            case 248:
+            case 98:
+                return new WalkPacket(parameters);
             // case 122:
             //     return new FirstOptionClickPacket(parameters);
             //case 103:
