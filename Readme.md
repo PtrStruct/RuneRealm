@@ -14,7 +14,7 @@ developers a chance to relive and explore the game as it was during those golden
 
 ### Phase 1: Core Features
 - **Players**
-    - [ ] Player Rendering
+    - [x] Player Rendering
     - [ ] Player Movement
 - **NPCs**
     - [ ] NPC Rendering
