@@ -16,6 +16,7 @@ public class World
         PlayerUpdateManager.Update();
         
         FlushAllPlayers();
+        ResetPlayers();
     }
     
     private static void FetchData()
@@ -34,5 +35,13 @@ public class World
     {
         foreach (var player in Players.ToList())
             player.Session.Flush();
+    }
+
+    private static void ResetPlayers()
+    {
+        foreach (var player in Players)
+        {
+            player.Reset();
+        }
     }
 }

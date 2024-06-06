@@ -12,4 +12,7 @@ public abstract class Entity
     {
         MovementHandler = new MovementHandler(this);
     }
+
+    public abstract void Reset();
+
 }

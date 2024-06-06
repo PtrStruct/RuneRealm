@@ -33,6 +33,7 @@ public class ClientManager
     {
         player.PacketBuilder.BuildNewBuildAreaPacket();
         player.NeedsPositionUpdate = true;
+        player.Flags |= PlayerUpdateFlags.Appearance;
     }
     
 }
