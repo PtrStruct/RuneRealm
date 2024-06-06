@@ -1,5 +1,11 @@
 # RuneRealm
 
+---
+
+<a href="https://google.com"> <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" /> </a>
+
+---
+
 Welcome to RuneRealm, a 2005-2006 era RuneScape server emulator! </br>
 This project aims to recreate the nostalgic experience of RuneScape during its classic era, offering players and
 developers a chance to relive and explore the game as it was during those golden years.

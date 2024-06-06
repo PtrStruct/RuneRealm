@@ -1,1 +1,3 @@
-﻿Console.WriteLine("Hello, World!");
+﻿using RuneRealm.Network;
+RSServer server = new RSServer();
+server.Run();
