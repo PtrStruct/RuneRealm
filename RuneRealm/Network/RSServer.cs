@@ -1,4 +1,5 @@
 ﻿using RuneRealm.Constants;
+using RuneRealm.Environment;
 using RuneRealm.Util;
 
 namespace RuneRealm.Network;
@@ -10,6 +11,7 @@ public class RSServer
     public void Run()
     {
         IsRunning = true;
+        ConnectionManager.Initialize();
         Console.WriteLine("Server is running..");
         while (IsRunning)
         {
@@ -20,7 +22,8 @@ public class RSServer
 
     private void Tick()
     {
-        
+        ConnectionManager.AcceptClients();
+        World.Process();
     }
 
     public void Stop()

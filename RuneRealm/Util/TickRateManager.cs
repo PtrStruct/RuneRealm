@@ -4,7 +4,7 @@ namespace RuneRealm.Util;
 
 public class TickRateManager
 {
-    private static Stopwatch _stopwatch;
+    private static Stopwatch _stopwatch = new();
     public TickRateManager()
     {
         _stopwatch = new Stopwatch();
