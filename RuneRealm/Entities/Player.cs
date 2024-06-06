@@ -23,12 +23,14 @@ public class Player : Entity
     public EquipmentManager EquipmentManager { get; set; }
     public ColorManager ColorManager { get; set; } = new();
     public AnimationManager AnimationManager { get; set; } = new();
+    public InventoryManager InventoryManager { get; set; }
     
     public Player()
     {
         PacketBuilder = new PacketBuilder(this);
         MovementHandler = new MovementHandler(this);
         EquipmentManager = new EquipmentManager(this);
+        InventoryManager = new InventoryManager(this);
         Location = new Location(3200, 3200, 0);
     }
 

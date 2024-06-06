@@ -34,6 +34,24 @@ public class ClientManager
         player.PacketBuilder.BuildNewBuildAreaPacket();
         player.NeedsPositionUpdate = true;
         player.Flags |= PlayerUpdateFlags.Appearance;
+        
+        player.PacketBuilder.SendPlayerStatus();
+        player.PacketBuilder.SendSidebarInterface(0, 2423);
+        player.PacketBuilder.SendSidebarInterface(1, 3917);
+        player.PacketBuilder.SendSidebarInterface(2, 638);
+        player.PacketBuilder.SendSidebarInterface(3, 3213);
+        player.PacketBuilder.SendSidebarInterface(4, 1644);
+        player.PacketBuilder.SendSidebarInterface(5, 5608);
+        player.PacketBuilder.SendSidebarInterface(6, 1151);
+        player.PacketBuilder.SendSidebarInterface(8, 5065);
+        player.PacketBuilder.SendSidebarInterface(9, 5715);
+        player.PacketBuilder.SendSidebarInterface(10, 2449);
+        player.PacketBuilder.SendSidebarInterface(11, 4445);
+        player.PacketBuilder.SendSidebarInterface(12, 147);
+        player.PacketBuilder.SendSidebarInterface(13, 6299);
+        
+        player.InventoryManager.Refresh();
+        player.EquipmentManager.Refresh();
     }
     
 }
