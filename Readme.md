@@ -54,7 +54,7 @@ developers a chance to relive and explore the game as it was during those golden
 
 1. **Clone the Repository**
    ```sh
-   git clone https://github.com/yourusername/RuneRealm.git
+   git clone https://github.com/PtrStruct/RuneRealm.git
    cd RuneRealm
    ```
 2. **Install Dependencies** (Make sure you have .NET Core installed on your system. You can download it
