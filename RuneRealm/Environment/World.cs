@@ -1,5 +1,6 @@
 ﻿using RuneRealm.Constants;
 using RuneRealm.Entities;
+using RuneRealm.Managers;
 
 namespace RuneRealm.Environment;
 
@@ -12,7 +13,7 @@ public class World
         FetchData();
         ProcessPackets();
         
-        
+        PlayerUpdateManager.Update();
         
         FlushAllPlayers();
     }

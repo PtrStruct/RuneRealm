@@ -32,6 +32,7 @@ public class ClientManager
     public static void Login(Player player)
     {
         player.PacketBuilder.BuildNewBuildAreaPacket();
+        player.NeedsPositionUpdate = true;
     }
     
 }
