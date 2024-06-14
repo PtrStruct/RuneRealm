@@ -156,8 +156,8 @@ public class PlayerUpdateManager
 
     private static void AppendFacingDirection(Player player, RSStream playerFlagUpdateBlock)
     {
-        playerFlagUpdateBlock.WriteWordA((int)player.FacingDirection.X / 2);
-        playerFlagUpdateBlock.WriteWord((int)player.FacingDirection.Y / 2);
+        playerFlagUpdateBlock.WriteWordBigEndianA((int)(player.FacingDirection.X * 2 + player.InteractingWorldObject.Width));
+        playerFlagUpdateBlock.WriteWordBigEndian((int)(player.FacingDirection.Y * 2 + player.InteractingWorldObject.Height));
     }
 
     private static void AppendGraphics(Player player, RSStream playerFlagUpdateBlock)
@@ -165,7 +165,7 @@ public class PlayerUpdateManager
         playerFlagUpdateBlock.WriteWordBigEndian(player.CurrentGfx);
         playerFlagUpdateBlock.WriteDWord(6553600);
     }
-    
+
     private static void AppendAnimation(Player player, RSStream playerFlagUpdateBlock)
     {
         playerFlagUpdateBlock.WriteWordBigEndian(player.CurrentAnimation);
