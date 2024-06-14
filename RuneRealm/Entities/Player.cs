@@ -1,6 +1,10 @@
-﻿using RuneRealm.Constants;
+﻿using System.Numerics;
+using RuneRealm.Constants;
+using RuneRealm.Data.ObjectsDef;
 using RuneRealm.Environment;
+using RuneRealm.Interactions;
 using RuneRealm.Managers;
+using RuneRealm.Models;
 using RuneRealm.Movement;
 using RuneRealm.Network;
 using RuneRealm.Network.Packets;
@@ -27,6 +31,8 @@ public class Player : Entity
     public AnimationManager AnimationManager { get; set; } = new();
     public InventoryManager InventoryManager { get; set; }
     public override Location Location { get; set; }
+    public InteractingObjectModel InteractingWorldObject { get; set; }
+    public IInteractionHandler InteractionHandler { get; set; }
 
     public Player()
     {
@@ -38,11 +44,35 @@ public class Player : Entity
         Location = new Location(3200, 3200, 0);
     }
 
+    public override void SetInteractingEntity(Entity entity)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SetFacingDirection(Vector2 vector)
+    {
+        FacingDirection = vector;
+        Flags |= PlayerUpdateFlags.FaceDirection;
+    }
+
+    public override void SetCurrentAnimation(int animationId)
+    {
+        CurrentAnimation = animationId;
+        Flags |= PlayerUpdateFlags.Animation;
+    }
+
+    public override void SetCurrentGfx(int gfx)
+    {
+        CurrentGfx = gfx;
+        Flags |= PlayerUpdateFlags.Graphics;
+    }
+
     public override void Reset()
     {
         NeedsPositionUpdate = false;
-        Flags |= PlayerUpdateFlags.None;
+        Flags = PlayerUpdateFlags.None;
 
+        CurrentAnimation = -1;
         MovementHandler.PrimaryDirection = -1;
         MovementHandler.SecondaryDirection = -1;
         MovementHandler.IsRunning = false;

@@ -95,7 +95,7 @@ public class PlayerSession
         Fill(_packetLength);
         Console.WriteLine($"[{_opCode}] [{(ClientOpCodes)_opCode}] Packet Received - Length: {_packetLength}");
 
-        var packet = PacketFactory.CreateClientPacket(_opCode, new PacketParameters { OpCode = _opCode, Length = _packetLength, Player = _owner });
+        var packet = PacketFactory.CreateClientPacket((ClientOpCodes)_opCode, new PacketParameters { OpCode = _opCode, Length = _packetLength, Player = _owner });
         PacketStore.AddPacket((ClientOpCodes)_opCode, packet);
         _state = FetchState.READ_OPCODE;
     }

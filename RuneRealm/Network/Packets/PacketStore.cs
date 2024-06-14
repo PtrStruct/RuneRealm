@@ -12,6 +12,7 @@ public class PacketStore
         { ClientOpCodes.CameraMovement, 10 },
         { ClientOpCodes.FocusChange, 10 },
         { ClientOpCodes.EquipItem, 10 },
+        { ClientOpCodes.ObjectAction1, 10 },
 
         /* Movement */
         { ClientOpCodes.WalkOnCommand, 10 },

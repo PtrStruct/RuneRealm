@@ -41,6 +41,9 @@ public class WalkPacket : IPacket
 
         _firstStepY = _player.Session.Reader.ReadSignedWordBigEndian();
         _running = _player.Session.Reader.ReadSignedByteC() == 1;
+
+
+        _player.InteractingWorldObject = null;
     }
 
     public void Process()
@@ -61,12 +64,7 @@ public class WalkPacket : IPacket
             _destY = _path[i, 1];
         }
 
-        _player.TaskScheduler.AddTask(new RSTask(QueueType.Strong, 0,
-            () =>
-            {
-                Console.WriteLine("Walk!");
-                RSPathfinder.FindPath(_player, _destX, _destY, true, 1, 1);
-                _player.MovementHandler.Finish();
-            }));
+        RSPathfinder.FindPath(_player, _destX, _destY, true, 1, 1);
+        _player.MovementHandler.Finish();
     }
 }

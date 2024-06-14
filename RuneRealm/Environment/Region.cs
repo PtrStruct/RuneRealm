@@ -1,6 +1,4 @@
-﻿
-
-using RuneRealm.Data;
+﻿using RuneRealm.Data;
 using RuneRealm.Data.ObjectsDef;
 using RuneRealm.Movement;
 
@@ -1116,7 +1114,8 @@ public class Region
                     if ((GetClipping(currentX + x, currentY + y + 1, height) & 0x1280120) != 0)
                         return false;
                 }
-                else if (diffX == 0 && diffY < 0  && (GetClipping(currentX + x, currentY + y - 1, height) & 0x1280102) != 0)
+                else if (diffX == 0 && diffY < 0 &&
+                         (GetClipping(currentX + x, currentY + y - 1, height) & 0x1280102) != 0)
                 {
                     return false;
                 }
@@ -1245,62 +1244,63 @@ public class Region
         return true;
     }
 
-    public static bool canInteract(int dstX, int dstY, int absX, int absY, int curX, int curY, int sizeX, int sizeY, int walkToData)
-    {
-        // if ((walkToData & 0x80000000) != 0)
-        //     if (curX == dstX && curY == dstY)
-        //         return false;
-
-        var maxX = dstX + sizeX - 1;
-        var maxY = dstY + sizeY - 1;
-
-        var region = GetRegion(absX, absY);
-        var clipping = region.GetClip(absX, absY, 0);
-
-        if (curX >= dstX && maxX >= curX && dstY <= curY && maxY >= curY) return true;
-
-        if (curX == dstX - 1 && curY >= dstY && curY <= maxY && (clipping & 8) == 0 &&
-            (walkToData & 8) == 0) return true;
-
-        if (curX == maxX + 1 && curY >= dstY && curY <= maxY && (clipping & 0x80) == 0 &&
-            (walkToData & 2) == 0) return true;
-
-        return (curY == dstY - 1 && curX >= dstX && curX <= maxX && (clipping & 2) == 0 && (walkToData & 4) == 0)
-               || (curY == maxY + 1 && curX >= dstX && curX <= maxX && (clipping & 0x20) == 0
-                   && (walkToData & 1) == 0);
-    }
-
-    // public static bool canInteract(int dstX, int dstY, int curX, int curY, int entitySizeX, int entitySizeY,
-    //     int targetSizeX, int targetSizeY, int walkToData)
+    // public static bool canInteract(int dstX, int dstY, int absX, int absY, int curX, int curY, int sizeX, int sizeY,
+    //     int walkToData)
     // {
-    //     var maxX = dstX + targetSizeX - 1;
-    //     var maxY = dstY + targetSizeY - 1;
+    //     // if ((walkToData & 0x80000000) != 0)
+    //     //     if (curX == dstX && curY == dstY)
+    //     //         return false;
     //
-    //     var region = GetRegion(curX, curY);
-    //     var clipping = region.GetClip(curX, curY, 0);
+    //     var maxX = dstX + sizeX - 1;
+    //     var maxY = dstY + sizeY - 1;
     //
-    //     for (var x = 0; x < entitySizeX; x++)
-    //     for (var y = 0; y < entitySizeY; y++)
-    //     {
-    //         var entityCurX = curX + x;
-    //         var entityCurY = curY + y;
+    //     var region = GetRegion(absX, absY);
+    //     var clipping = region.GetClip(absX, absY, 0);
     //
-    //         if (entityCurX >= dstX && maxX >= entityCurX && dstY <= entityCurY && maxY >= entityCurY) return true;
+    //     if (curX >= dstX && maxX >= curX && dstY <= curY && maxY >= curY) return true;
     //
-    //         if (entityCurX == dstX - 1 && entityCurY >= dstY && entityCurY <= maxY && (clipping & 8) == 0 &&
-    //             (walkToData & 8) == 0) return true;
+    //     if (curX == dstX - 1 && curY >= dstY && curY <= maxY && (clipping & 8) == 0 &&
+    //         (walkToData & 8) == 0) return true;
     //
-    //         if (entityCurX == maxX + 1 && entityCurY >= dstY && entityCurY <= maxY && (clipping & 0x80) == 0 &&
-    //             (walkToData & 2) == 0) return true;
+    //     if (curX == maxX + 1 && curY >= dstY && curY <= maxY && (clipping & 0x80) == 0 &&
+    //         (walkToData & 2) == 0) return true;
     //
-    //         if ((entityCurY == dstY - 1 && entityCurX >= dstX && entityCurX <= maxX && (clipping & 2) == 0 &&
-    //              (walkToData & 4) == 0) ||
-    //             (entityCurY == maxY + 1 && entityCurX >= dstX && entityCurX <= maxX && (clipping & 0x20) == 0 &&
-    //              (walkToData & 1) == 0)) return true;
-    //     }
-    //
-    //     return false;
+    //     return (curY == dstY - 1 && curX >= dstX && curX <= maxX && (clipping & 2) == 0 && (walkToData & 4) == 0)
+    //            || (curY == maxY + 1 && curX >= dstX && curX <= maxX && (clipping & 0x20) == 0
+    //                && (walkToData & 1) == 0);
     // }
+    
+
+   public static bool canInteract(int dstX, int dstY, int curX, int curY, int entitySizeX, int entitySizeY, int targetSizeX, int targetSizeY, int walkToData)
+   {
+       var maxX = dstX + targetSizeX - 1;
+       var maxY = dstY + targetSizeY - 1;
+   
+       var region = GetRegion(curX, curY);
+       var clipping = region.GetClip(curX, curY, 0);
+   
+       for (var x = 0; x < entitySizeX; x++)
+       for (var y = 0; y < entitySizeY; y++)
+       {
+           var entityCurX = curX + x;
+           var entityCurY = curY + y;
+   
+           if (entityCurX >= dstX && maxX >= entityCurX && dstY <= entityCurY && maxY >= entityCurY) return true;
+   
+           if (entityCurX == dstX - 1 && entityCurY >= dstY && entityCurY <= maxY && (clipping & 8) == 0 &&
+               (walkToData & 8) == 0) return true;
+   
+           if (entityCurX == maxX + 1 && entityCurY >= dstY && entityCurY <= maxY && (clipping & 0x80) == 0 &&
+               (walkToData & 2) == 0) return true;
+   
+           if ((entityCurY == dstY - 1 && entityCurX >= dstX && entityCurX <= maxX && (clipping & 2) == 0 &&
+                (walkToData & 4) == 0) ||
+               (entityCurY == maxY + 1 && entityCurX >= dstX && entityCurX <= maxX && (clipping & 0x20) == 0 &&
+                (walkToData & 1) == 0)) return true;
+       }
+   
+       return false;
+   }
 
     public static bool BlockedShot(int x, int y, int height, int moveTypeX, int moveTypeY)
     {

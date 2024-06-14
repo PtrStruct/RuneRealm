@@ -14,11 +14,39 @@ public class World
         ProcessPackets();
 
         foreach (var player in Players)
+        {
+            if (player.InteractingWorldObject != null && player.InteractionHandler != null)
+            {
+                var canInteract = Region.canInteract(
+                    player.InteractingWorldObject.X,
+                    player.InteractingWorldObject.Y,
+                    player.Location.X,
+                    player.Location.Y,
+                    1,
+                    1,
+                    player.InteractingWorldObject.Width,
+                    player.InteractingWorldObject.Height, 0);
+
+                player.PacketBuilder.SendMessage($"CanInteract: {canInteract}");
+
+                if (canInteract)
+                {
+                    player.InteractionHandler.HandleInteraction(player, player.InteractingWorldObject);
+                }
+            }
+        }
+        
+        foreach (var player in Players)
             player.TaskScheduler.ProcessTasks();
+        
         foreach (var player in Players)
             player.MovementHandler.Process();
+        
+        
+
 
         PlayerUpdateManager.Update();
+
 
         FlushAllPlayers();
         ResetPlayers();

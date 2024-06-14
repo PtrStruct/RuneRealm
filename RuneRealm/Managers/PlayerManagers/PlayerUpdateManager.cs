@@ -146,20 +146,32 @@ public class PlayerUpdateManager
             playerFlagUpdateBlock.WriteByte((byte)mask);
         }
 
-        //if ((mask & PlayerUpdateFlags.Graphics) != 0) AppendGraphics(player, playerFlagUpdateBlock);
-        //if ((mask & PlayerUpdateFlags.Animation) != 0) AppendAnimation(player, playerFlagUpdateBlock);
+        if ((mask & PlayerUpdateFlags.Graphics) != 0) AppendGraphics(player, playerFlagUpdateBlock);
+        if ((mask & PlayerUpdateFlags.Animation) != 0) AppendAnimation(player, playerFlagUpdateBlock);
         //if ((mask & PlayerUpdateFlags.InteractingEntity) != 0) AppendNPCInteract(player, playerFlagUpdateBlock);
         if ((mask & PlayerUpdateFlags.Appearance) != 0) AppendAppearance(player, playerFlagUpdateBlock);
-        //if ((mask & PlayerUpdateFlags.FaceDirection) != 0) AppendInteractingEntity(player, playerFlagUpdateBlock);
+        if ((mask & PlayerUpdateFlags.FaceDirection) != 0) AppendFacingDirection(player, playerFlagUpdateBlock);
         //if ((mask & PlayerUpdateFlags.SingleHit) != 0) AppendSingleHit(player, playerFlagUpdateBlock);
     }
+
+    private static void AppendFacingDirection(Player player, RSStream playerFlagUpdateBlock)
+    {
+        playerFlagUpdateBlock.WriteWordA((int)player.FacingDirection.X / 2);
+        playerFlagUpdateBlock.WriteWord((int)player.FacingDirection.Y / 2);
+    }
+
+    private static void AppendGraphics(Player player, RSStream playerFlagUpdateBlock)
+    {
+        playerFlagUpdateBlock.WriteWordBigEndian(player.CurrentGfx);
+        playerFlagUpdateBlock.WriteDWord(6553600);
+    }
     
-    // private static void AppendGraphics(Player player, RSStream playerFlagUpdateBlock)
-    // {
-    //     playerFlagUpdateBlock.WriteWordBigEndian(player.CurrentGfx);
-    //     playerFlagUpdateBlock.WriteDWord(6553600);
-    // }
-    //
+    private static void AppendAnimation(Player player, RSStream playerFlagUpdateBlock)
+    {
+        playerFlagUpdateBlock.WriteWordBigEndian(player.CurrentAnimation);
+        playerFlagUpdateBlock.WriteByteC(0); //delay
+    }
+
     // private static void AppendSingleHit(Player player, RSStream playerFlagUpdateBlock)
     // {
     //     playerFlagUpdateBlock.WriteByte((byte)player.MostRecentDamage.FirstAmount); //hitDamage
@@ -184,42 +196,38 @@ public class PlayerUpdateManager
     //     }
     // }
     //
-    // private static void AppendAnimation(Player player, RSStream playerFlagUpdateBlock)
-    // {
-    //     playerFlagUpdateBlock.WriteWordBigEndian(player.CurrentAnimation);
-    //     playerFlagUpdateBlock.WriteByteC(0); //delay
-    // }
-    //
-     private static void AppendAppearance(Player player, RSStream playerFlagUpdateBlock)
-     {
-         var updateBlockBuffer = new RSStream(new byte[256]);
-         updateBlockBuffer.WriteByte(player.Gender);
-         updateBlockBuffer.WriteByte(player.HeadIcon); // Skull Icon
-    
-         WriteHelmet(updateBlockBuffer, player);
-         WriteCape(updateBlockBuffer, player);
-         WriteAmulet(updateBlockBuffer, player);
-         WriteWeapon(updateBlockBuffer, player);
-         WriteBody(updateBlockBuffer, player);
-         WriteShield(updateBlockBuffer, player);
-         WriteArms(updateBlockBuffer, player);
-         WriteLegs(updateBlockBuffer, player);
-    
-         WriteHair(updateBlockBuffer, player);
-         WriteHands(updateBlockBuffer, player);
-         WriteFeet(updateBlockBuffer, player);
-         WriteBeard(updateBlockBuffer, player);
-    
-         WritePlayerColors(updateBlockBuffer, player);
-         WriteMovementAnimations(updateBlockBuffer, player);
-    
-         updateBlockBuffer.WriteQWord(player.Username.ToLong());
-         updateBlockBuffer.WriteByte(126);
-         updateBlockBuffer.WriteWord(100);
-    
-         playerFlagUpdateBlock.WriteByteC(updateBlockBuffer.CurrentOffset);
-         playerFlagUpdateBlock.WriteBytes(updateBlockBuffer.Buffer, updateBlockBuffer.CurrentOffset, 0);
-     }
+
+
+    private static void AppendAppearance(Player player, RSStream playerFlagUpdateBlock)
+    {
+        var updateBlockBuffer = new RSStream(new byte[256]);
+        updateBlockBuffer.WriteByte(player.Gender);
+        updateBlockBuffer.WriteByte(player.HeadIcon); // Skull Icon
+
+        WriteHelmet(updateBlockBuffer, player);
+        WriteCape(updateBlockBuffer, player);
+        WriteAmulet(updateBlockBuffer, player);
+        WriteWeapon(updateBlockBuffer, player);
+        WriteBody(updateBlockBuffer, player);
+        WriteShield(updateBlockBuffer, player);
+        WriteArms(updateBlockBuffer, player);
+        WriteLegs(updateBlockBuffer, player);
+
+        WriteHair(updateBlockBuffer, player);
+        WriteHands(updateBlockBuffer, player);
+        WriteFeet(updateBlockBuffer, player);
+        WriteBeard(updateBlockBuffer, player);
+
+        WritePlayerColors(updateBlockBuffer, player);
+        WriteMovementAnimations(updateBlockBuffer, player);
+
+        updateBlockBuffer.WriteQWord(player.Username.ToLong());
+        updateBlockBuffer.WriteByte(126);
+        updateBlockBuffer.WriteWord(100);
+
+        playerFlagUpdateBlock.WriteByteC(updateBlockBuffer.CurrentOffset);
+        playerFlagUpdateBlock.WriteBytes(updateBlockBuffer.Buffer, updateBlockBuffer.CurrentOffset, 0);
+    }
 
     private static void UpdateCurrentPlayerMovement()
     {
@@ -295,12 +303,12 @@ public class PlayerUpdateManager
     {
         player.Session.Writer.WriteBits(2, 0);
     }
-    
+
     private static void WriteIdleStand(Player player)
     {
         player.Session.Writer.WriteBits(1, 0);
     }
-    
+
     private static void WriteBeard(RSStream stream, Player player)
     {
         var beard = player.AppearanceManager.Beard;
@@ -441,5 +449,4 @@ public class PlayerUpdateManager
         foreach (var animation in player.AnimationManager.GetAnimations())
             stream.WriteWord(animation);
     }
-
 }
