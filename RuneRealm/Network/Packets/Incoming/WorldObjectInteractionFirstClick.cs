@@ -1,4 +1,5 @@
-﻿using RuneRealm.Data.ObjectsDef;
+﻿using System.Numerics;
+using RuneRealm.Data.ObjectsDef;
 using RuneRealm.Entities;
 using RuneRealm.Interactions;
 using RuneRealm.Models;
@@ -35,8 +36,9 @@ public class WorldObjectInteractionFirstClick : IPacket
 
         if (worldObject != null)
         {
-            Console.WriteLine($"Clicked Name: {worldObject.Name} - Id: {worldObject.Id} - Width: {worldObject.Width} - Length: {worldObject.Length} - at X: {x} and Y: {y}");
-            
+            Console.WriteLine(
+                $"Clicked Name: {worldObject.Name} - Id: {worldObject.Id} - Width: {worldObject.Width} - Length: {worldObject.Length} - at X: {x} and Y: {y}");
+
             _player.InteractingWorldObject = new InteractingObjectModel
             {
                 Id = _id,
@@ -47,9 +49,13 @@ public class WorldObjectInteractionFirstClick : IPacket
                 Height = worldObject.Length,
                 InteractionType = InteractionTypeMapping.TypeMap.GetValueOrDefault(id, InteractionType.UNKNOWN)
             };
-            
+
             _player.InteractionHandler = InteractionHandlerFactory.GetHandler(_player.InteractingWorldObject.InteractionType);
-            
+
+            _x = _x * 2 + _player.InteractingWorldObject.Width;
+            _y = _y * 2 + _player.InteractingWorldObject.Height;
+
+            _player.SetFacingDirection(new Vector2(_x, _y));
             // _player.SetInteractingEntity(objectData);
         }
         else

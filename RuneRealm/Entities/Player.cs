@@ -67,6 +67,11 @@ public class Player : Entity
         Flags |= PlayerUpdateFlags.Graphics;
     }
 
+    public void ResetInteractingWorldObject()
+    {
+        InteractingWorldObject = null;
+    }
+    
     public override void Reset()
     {
         NeedsPositionUpdate = false;
