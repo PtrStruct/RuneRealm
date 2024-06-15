@@ -11,14 +11,11 @@ public class WoodcuttingHandler : IInteractionHandler
         i++;
         player.PacketBuilder.SendMessage("Woodcutting!");
         
-        if (player.CurrentAnimation != 875)
-        {
-            player.SetCurrentAnimation(875);
-        }
+        player.SetCurrentAnimation(875);
 
         if (i == 10)
         {
-            player.InteractingWorldObject = null;
+            player.ResetInteractingWorldObject();
             player.SetCurrentAnimation(-1);
             
             Console.WriteLine("Finished woodcutting!");
