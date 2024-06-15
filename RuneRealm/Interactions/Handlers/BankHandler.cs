@@ -3,9 +3,9 @@ using RuneRealm.Models;
 
 namespace RuneRealm.Interactions;
 
-public class BankHandler : IInteractionHandler
+public class BankHandler : InteractionHandler
 {
-    public void HandleInteraction(Player player, InteractingObjectModel interactingObject)
+    public override void HandleInteraction(Player player, InteractingObjectModel interactingObject)
     {
         player.PacketBuilder.SendMessage("Open Bank!");
         player.ResetInteractingWorldObject();

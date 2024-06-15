@@ -3,9 +3,9 @@ using RuneRealm.Models;
 
 namespace RuneRealm.Interactions;
 
-public class OpenGateHandler : IInteractionHandler
+public class OpenGateHandler : InteractionHandler
 {
-    public void HandleInteraction(Player player, InteractingObjectModel interactingObject)
+    public override void HandleInteraction(Player player, InteractingObjectModel interactingObject)
     {
         if (interactingObject.Id == 5492)
         {

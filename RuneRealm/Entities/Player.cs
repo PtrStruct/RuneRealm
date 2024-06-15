@@ -32,7 +32,7 @@ public class Player : Entity
     public InventoryManager InventoryManager { get; set; }
     public override Location Location { get; set; }
     public InteractingObjectModel InteractingWorldObject { get; set; }
-    public IInteractionHandler InteractionHandler { get; set; }
+    public InteractionHandler InteractionHandler { get; set; } = new NoOpHandler();
 
     public Player()
     {
@@ -41,7 +41,7 @@ public class Player : Entity
         EquipmentManager = new EquipmentManager(this);
         InventoryManager = new InventoryManager(this);
         Session = new PlayerSession(this);
-        Location = new Location(3200, 3200, 0);
+        Location = new Location(2834, 3335, 0);
     }
 
     public override void SetInteractingEntity(Entity entity)
@@ -69,6 +69,7 @@ public class Player : Entity
 
     public void ResetInteractingWorldObject()
     {
+        InteractionHandler = new NoOpHandler();
         InteractingWorldObject = null;
     }
     

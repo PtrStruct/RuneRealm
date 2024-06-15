@@ -2,7 +2,7 @@
 
 public class InteractionHandlerFactory
 {
-    public static IInteractionHandler GetHandler(InteractionType interactionType)
+    public static InteractionHandler GetHandler(InteractionType interactionType)
     {
         return interactionType switch
         {
@@ -11,7 +11,7 @@ public class InteractionHandlerFactory
             InteractionType.GATE => new OpenGateHandler(),
             InteractionType.BANK => new BankHandler(),
             InteractionType.THIEVING_STALL => new BankHandler(),
-            _ => null
+            _ => new NoOpHandler()
         };
     }
 }

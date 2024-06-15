@@ -3,7 +3,7 @@ using RuneRealm.Models;
 
 namespace RuneRealm.Interactions;
 
-public interface IInteractionHandler
+public abstract class InteractionHandler
 {
-    void HandleInteraction(Player player, InteractingObjectModel interactingObject);
+    public abstract void HandleInteraction(Player player, InteractingObjectModel interactingObject);
 }
