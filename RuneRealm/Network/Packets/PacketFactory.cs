@@ -17,8 +17,8 @@ public static class PacketFactory
                 return new WorldObjectInteractionFirstClick(parameters);
             // case 122:
             //     return new FirstOptionClickPacket(parameters);
-            //case 103:
-            //    return new PlayerCommandPacket(parameters);
+            case ClientOpCodes.PlayerCommand:
+                return new PlayerCommandPacket(parameters);
             //case 72:
             //case 131:
             //    return new NPCInteractPacket(parameters);

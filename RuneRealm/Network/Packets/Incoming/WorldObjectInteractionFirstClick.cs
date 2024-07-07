@@ -3,8 +3,6 @@ using RuneRealm.Data.ObjectsDef;
 using RuneRealm.Entities;
 using RuneRealm.Interactions;
 using RuneRealm.Models;
-using RuneRealm.Movement;
-using RuneRealm.Tasks;
 
 namespace RuneRealm.Network.Packets.Incoming;
 
@@ -56,7 +54,6 @@ public class WorldObjectInteractionFirstClick : IPacket
             _y = _y * 2 + _player.InteractingWorldObject.Height;
 
             _player.SetFacingDirection(new Vector2(_x, _y));
-            // _player.SetInteractingEntity(objectData);
         }
         else
         {

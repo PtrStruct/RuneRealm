@@ -6,6 +6,7 @@ public enum InteractionType
     MINING,
     THIEVING_STALL,
     GATE,
+    LADDER,
     BANK,
     UNKNOWN
 }

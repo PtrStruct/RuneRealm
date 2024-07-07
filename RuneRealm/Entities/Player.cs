@@ -33,6 +33,9 @@ public class Player : Entity
     public override Location Location { get; set; }
     public InteractingObjectModel InteractingWorldObject { get; set; }
     public InteractionHandler InteractionHandler { get; set; } = new NoOpHandler();
+    public PlayerRights Rights { get; set; } = PlayerRights.NORMAL;
+    
+    public Guid CurrentTaskId { get; set; }
 
     public Player()
     {
@@ -41,9 +44,18 @@ public class Player : Entity
         EquipmentManager = new EquipmentManager(this);
         InventoryManager = new InventoryManager(this);
         Session = new PlayerSession(this);
-        Location = new Location(2834, 3335, 0);
+        Location = new Location(ServerConfig.SPAWN.X, ServerConfig.SPAWN.Y, 0);
     }
 
+    public Guid StartNewTask()
+    {
+        CurrentTaskId = Guid.NewGuid();
+        Console.WriteLine($"CurrentTaskId: {CurrentTaskId}");
+        return CurrentTaskId;
+    }
+    
+    public bool CheckTask(Guid taskId) => taskId == CurrentTaskId;
+    
     public override void SetInteractingEntity(Entity entity)
     {
         throw new NotImplementedException();

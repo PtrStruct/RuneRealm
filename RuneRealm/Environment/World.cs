@@ -1,5 +1,6 @@
 ﻿using RuneRealm.Constants;
 using RuneRealm.Entities;
+using RuneRealm.Events;
 using RuneRealm.Managers;
 
 namespace RuneRealm.Environment;
@@ -7,6 +8,7 @@ namespace RuneRealm.Environment;
 public class World
 {
     public static List<Player> Players { get; set; } = new();
+    public static RSEventHandler RSEventHandler = RSEventHandler.Instance;
 
     public static void Process()
     {
@@ -18,9 +20,11 @@ public class World
             player.InteractionHandler.HandleInteraction(player, player.InteractingWorldObject);
         }
 
-        foreach (var player in Players)
-            player.TaskScheduler.ProcessTasks();
+        // foreach (var player in Players)
+        //     player.TaskScheduler.ProcessTasks();
 
+        RSEventHandler.Process();
+        
         foreach (var player in Players)
             player.MovementHandler.Process();
 

@@ -43,7 +43,8 @@ public class WalkPacket : IPacket
         _running = _player.Session.Reader.ReadSignedByteC() == 1;
 
         _player.ResetInteractingWorldObject();
-        
+        _player.StartNewTask();
+        _player.SetCurrentAnimation(-1);
     }
 
     public void Process()

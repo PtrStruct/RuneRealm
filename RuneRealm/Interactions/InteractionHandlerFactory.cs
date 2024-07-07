@@ -8,6 +8,7 @@ public class InteractionHandlerFactory
         {
             InteractionType.WOODCUTTING => new WoodcuttingHandler(),
             InteractionType.MINING => new MiningHandler(),
+            InteractionType.LADDER => new LadderHandler(),
             InteractionType.GATE => new OpenGateHandler(),
             InteractionType.BANK => new BankHandler(),
             InteractionType.THIEVING_STALL => new BankHandler(),

@@ -1,5 +1,6 @@
 ﻿using RuneRealm.Entities;
 using RuneRealm.Environment;
+using RuneRealm.Events;
 using RuneRealm.Models;
 
 namespace RuneRealm.Interactions;
@@ -13,18 +14,25 @@ public class WoodcuttingHandler : InteractionHandler
         if (!CanInteract(player, null))
             return;
 
-        i++;
-        player.PacketBuilder.SendMessage("Woodcutting!");
+        
+        var guid = player.StartNewTask();
+        
+        World.RSEventHandler.AddEvent(player, new WoodcuttingEvent(player, 8, guid), 4);
+        player.ResetInteractingWorldObject();
 
-        player.SetCurrentAnimation(875);
-
-        if (i == 10)
-        {
-            player.ResetInteractingWorldObject();
-            player.SetCurrentAnimation(-1);
-
-            Console.WriteLine("Finished woodcutting!");
-        }
+        // var wcEvent = new WoodcuttingEvent();
+        // i++;
+        // player.PacketBuilder.SendMessage("Woodcutting!");
+        //
+        // player.SetCurrentAnimation(875);
+        //
+        // if (i == 10)
+        // {
+        //     player.ResetInteractingWorldObject();
+        //     player.SetCurrentAnimation(-1);
+        //
+        //     Console.WriteLine("Finished woodcutting!");
+        // }
     }
 
     private bool CanInteract(Player player, InteractingObjectModel interactingObjectModel)

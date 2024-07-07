@@ -8,6 +8,7 @@ public static class InteractionTypeMapping
         { 1278, InteractionType.WOODCUTTING },
         { 1281, InteractionType.WOODCUTTING },
         { 2092, InteractionType.MINING },     
+        { 2408, InteractionType.LADDER },     
         { 7053, InteractionType.THIEVING_STALL },
         { 1534, InteractionType.GATE },
         { 5492, InteractionType.GATE },
