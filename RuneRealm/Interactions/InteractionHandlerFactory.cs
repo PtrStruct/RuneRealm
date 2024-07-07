@@ -11,7 +11,7 @@ public class InteractionHandlerFactory
             InteractionType.LADDER => new LadderHandler(),
             InteractionType.GATE => new OpenGateHandler(),
             InteractionType.BANK => new BankHandler(),
-            InteractionType.THIEVING_STALL => new BankHandler(),
+            InteractionType.THIEVING_STALL => new NoOpHandler(),
             _ => new NoOpHandler()
         };
     }

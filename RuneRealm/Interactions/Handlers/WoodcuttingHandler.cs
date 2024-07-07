@@ -7,32 +7,31 @@ namespace RuneRealm.Interactions;
 
 public class WoodcuttingHandler : InteractionHandler
 {
-    private int i = 0;
-
     public override void HandleInteraction(Player player, InteractingObjectModel interactingObject)
     {
+        /* Guard clauses */
+        
+        /* Distance check */
         if (!CanInteract(player, null))
             return;
+        
+        // if (!player.HasAxe() || player.WoodcuttingLevel < tree.RequiredLevel)
+        // {
+        //     container.Stop();
+        //     return;
+        // }
 
+        var hasRequiredLevel = true;
+        if (!hasRequiredLevel)
+        {
+            player.ResetInteractingWorldObject();
+            return;
+        }
         
         var guid = player.StartNewTask();
-        
-        World.RSEventHandler.AddEvent(player, new WoodcuttingEvent(player, 8, guid), 4);
+        World.RSEventHandler.AddEvent(player, new WoodcuttingEvent(player, guid), 4);
         player.ResetInteractingWorldObject();
-
-        // var wcEvent = new WoodcuttingEvent();
-        // i++;
-        // player.PacketBuilder.SendMessage("Woodcutting!");
-        //
-        // player.SetCurrentAnimation(875);
-        //
-        // if (i == 10)
-        // {
-        //     player.ResetInteractingWorldObject();
-        //     player.SetCurrentAnimation(-1);
-        //
-        //     Console.WriteLine("Finished woodcutting!");
-        // }
+        player.SetCurrentAnimation(875);
     }
 
     private bool CanInteract(Player player, InteractingObjectModel interactingObjectModel)

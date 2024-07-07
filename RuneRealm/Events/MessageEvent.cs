@@ -24,13 +24,19 @@ public class MessageEvent : RSEvent
             return;
         }
         
-        cycleCount++;
+        // cycleCount++;
 
-        if (cycleCount > 5)
+        if (SkillCheck(10, 1, 3))
         {
+            player.PacketBuilder.SendMessage("You received x1 log.");
             container.Stop();
             return;
         }
+        // if (cycleCount > 3)
+        // {
+        //     container.Stop();
+        //     return;
+        // }
 
         player.PacketBuilder.SendMessage("Event..");
         player.SetCurrentAnimation(875);
@@ -40,5 +46,13 @@ public class MessageEvent : RSEvent
     {
         player.PacketBuilder.SendMessage("Finished!");
         player.SetCurrentAnimation(-1);
+    }
+    
+    public bool SkillCheck(int level, int levelRequired, int itemBonus)
+    {
+        double chance = 0.0;
+        double baseChance = Math.Pow(10d - levelRequired / 10d, 2d) / 2d;
+        chance = baseChance + ((level - levelRequired) / 2d) + (itemBonus / 10d);
+        return chance >= (new Random().NextDouble() * 100.0);
     }
 }

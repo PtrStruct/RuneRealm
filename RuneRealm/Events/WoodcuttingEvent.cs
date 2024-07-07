@@ -6,48 +6,50 @@ public class WoodcuttingEvent : RSEvent
 {
     // private readonly Tree tree;
     private readonly Player _player;
-    private readonly int _cyclesToChop;
     private readonly Guid _guid;
 
-    public WoodcuttingEvent(Player player, int cyclesToChop, Guid guid) //Player player, Tree tree, int cyclesToChop
+    public WoodcuttingEvent(Player player,  Guid guid) //Player player, Tree tree, int cyclesToChop
     {
         _player = player;
         // tree = tree;
-        _cyclesToChop = cyclesToChop;
         _guid = guid;
     }
 
     public override void Execute(RSEventContainer container)
     {
-        // if (!player.HasAxe() || player.WoodcuttingLevel < tree.RequiredLevel)
-        // {
-        //     container.Stop();
-        //     return;
-        // }
-
+        
         var player = (Player)container.Owner;
+        
         var valid = player.CheckTask(_guid);
-
         if (!valid)
         {
             container.Stop();
             return;
         }
+
+        player.PacketBuilder.SendMessage("Woodcutting..");
         
+        if (SkillCheck(1, 5, 0))
+        {
+            player.PacketBuilder.SendMessage("You received x1 log.");
+            container.Stop();
+            return;
+        }
+
         _player.SetCurrentAnimation(875);
-        
-         if (++container.Interval >= _cyclesToChop)
-         {
-             _player.PacketBuilder.SendMessage("Finished woodcutting.");
-             // player.AddExperience(tree.Experience);
-             // player.AddLog(tree.LogType);
-             // tree.ChopDown();
-             container.Stop();
-         }
     }
 
     public override void Stop()
     {
         _player.SetCurrentAnimation(-1);
     }
+    
+    public bool SkillCheck(int level, int levelRequired, int itemBonus)
+    {
+        double chance = 0.0;
+        double baseChance = Math.Pow(10d - levelRequired / 10d, 2d) / 2d;
+        chance = baseChance + ((level - levelRequired) / 2d) + (itemBonus / 10d);
+        return chance >= (new Random().NextDouble() * 100.0);
+    }
+    
 }
