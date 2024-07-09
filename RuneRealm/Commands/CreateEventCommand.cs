@@ -16,8 +16,8 @@ public class CreateEventCommand : CommandBase
 
     protected override void Invoke()
     {
-        Player.SetCurrentAnimation(875);
+        // Player.SetCurrentAnimation(422);
         var guid = Player.StartNewTask();
-        RSEventHandler.Instance.AddEvent(Player, new MessageEvent(Player, guid), 4);
+        RSEventHandler.Instance.AddEvent(Player, new CombatEvent(Player, guid), 1);
     }
 }

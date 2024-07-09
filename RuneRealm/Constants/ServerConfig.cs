@@ -11,5 +11,6 @@ public class ServerConfig
     public static int SERVER_EXP_BONUS = 25;
     public static int PACKET_FETCH_LIMIT = 25;
     public static bool STARTUP = true;
-    public static Location SPAWN = new(2815, 3373, 0);
+    public static Location SPAWN_LADDER = new(2815, 3373, 0);
+    public static Location SPAWN = new(2827, 3344, 0);
 }

@@ -17,17 +17,18 @@ public class WoodcuttingEvent : RSEvent
 
     public override void Execute(RSEventContainer container)
     {
-        
         var player = (Player)container.Owner;
         
         var valid = player.CheckTask(_guid);
         if (!valid)
         {
+            player.PacketBuilder.SendMessage("Wodductting interrupted..");
             container.Stop();
             return;
         }
 
         player.PacketBuilder.SendMessage("Woodcutting..");
+        
         
         if (SkillCheck(1, 5, 0))
         {
